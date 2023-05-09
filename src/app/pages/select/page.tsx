@@ -1,13 +1,18 @@
 'use client';
+
+import { useState } from 'react';
+
+import { useRouter } from 'next/navigation';
 import Image, { StaticImageData } from 'next/image';
 import { Col, Row, Space, Button } from 'antd';
-import { useState } from 'react';
+
+import { ArrowLeftOutlined } from '@ant-design/icons';
+
 import flag from '../../assets/election.png';
 import test1 from '../../assets/test1.jpeg';
 import test2 from '../../assets/test2.png';
 import test3 from '../../assets/test3.png';
 import test4 from '../../assets/test4.png';
-import { ArrowLeftOutlined } from '@ant-design/icons';
 
 interface ImageButtonProps {
     imageName: StaticImageData;
@@ -16,7 +21,7 @@ interface ImageButtonProps {
     isClicked: boolean;
 }
 
-const ImageButton = ({ imageName, buttonName, onClick, isClicked }: ImageButtonProps) => (
+const ImageButton = ({ buttonName, imageName, isClicked, onClick }: ImageButtonProps) => (
     <Col span={6}>
         <Button className={`button ${isClicked ? "clicked" : ""}`} onClick={onClick}>
             <Image
@@ -41,6 +46,8 @@ const LanguagePage = () => {
             setClickedButton(buttonName);
         }
     };
+
+    const router = useRouter();
 
     return (
         <main className="flex min-h-screen flex-col items-center justify-between p-24 test" style={{ marginLeft: '70px', marginTop: '30px', marginRight: "70px" }}>
@@ -80,7 +87,7 @@ const LanguagePage = () => {
                 />
             </Row>
             <Row style={{marginTop: "10%"}}>
-                <Button className="backBtn" size='large' type="dashed" icon={<ArrowLeftOutlined />}>Back</Button>
+                <Button className="backBtn" size='large' type="dashed" onClick={()=> router.push('/pages/welcome')} icon={<ArrowLeftOutlined />}>Back</Button>
         </Row>
         </main>
     );

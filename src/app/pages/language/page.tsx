@@ -3,8 +3,11 @@ import Image from 'next/image'
 import flag from '../../assets/flag.png';
 import flag1 from '../../assets/flag1.png';
 import { Col, Row, Space, Button } from 'antd';
+import { useRouter } from 'next/navigation';
+const LanguagePage = () => {
+    const router = useRouter();
 
-const LanguagePage = () => (
+    return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24 test" style={{ marginLeft: '70px', marginTop: '30px', marginRight: "70px" }}>
         <Row className='text-center'>
             <Col span={12} style={{ textAlign: 'left' }}> <Image
@@ -37,10 +40,10 @@ const LanguagePage = () => (
             <Space wrap>
                 <Button className="ant-btn-outline-white" size='large'>Sinhala</Button>
                 <Button type="default" size='large' className="ant-btn-outline-white">Tamil</Button>
-                <Button type="default" size='large' className="ant-btn-outline-white">English</Button>
+                <Button type="default" size='large' className="ant-btn-outline-white" onClick={()=> router.push('/pages/select')}>English</Button>
             </Space>
         </div>
     </main>
 );
-
+};
 export default LanguagePage;
