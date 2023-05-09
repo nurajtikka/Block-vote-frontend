@@ -1,14 +1,12 @@
 'use client';
 
+import { useRouter } from "next/navigation";
+
 import Button from '../components/Button';
 
-const Profile = (): JSX.Element => (
-    <div className="globalPage">
-        <h1>Page Title</h1>
-        <Button>anji</Button>
-        <Button active>Hello I am an active Button</Button>
-        <div>hello</div>
-    </div>
-);
+const Profile = () => {
+    const router = useRouter()
+    router.push('/pages/welcome');
+}
 
 export default Profile;

@@ -1,12 +1,15 @@
 "use client";
+
 import Image from "next/image";
-import flag from "../../assets/flag.png";
-import flag1 from "../../assets/flag1.png";
 import { Space, Button, Row, Col } from "antd";
 import { useRouter } from 'next/navigation';
 
+import flag from "../../assets/flag.png";
+import flag1 from "../../assets/flag1.png";
+
 const ConfirmPage = () => {
     const router = useRouter();
+    const language = sessionStorage.getItem('block-vote-language')
     return (
     <main
     className="flex min-h-screen flex-col items-center justify-between p-24 test"
@@ -38,7 +41,7 @@ const ConfirmPage = () => {
           className="mt-4 subHeading text-center"
           style={{ fontSize: "32px", color: "black", marginBottom: "25px" }}
         >
-          Contratulations! You have successfully submmited your vote.
+          {language === 'en' && 'Congratulations! You have successfully submitted your vote.' || language === 'si' && 'සුභ පැතුම්! ඔබ ඔබේ ඡන්දය සාර්ථකව ඉදිරිපත් කර ඇත.' || language === 'ta' && 'வாழ்த்துகள்! உங்கள் வாக்கை வெற்றிகரமாகச் சமர்ப்பித்துவிட்டீர்கள்.'}
         </p>
       </div>
     </div>
@@ -51,7 +54,7 @@ const ConfirmPage = () => {
           className="mt-4 subHeading text-center"
           style={{ fontSize: "32px", color: "black", marginBottom: "25px" }}
         >
-          Thank you!
+          {language === 'en' && 'Thank you!' || language === 'si' && 'ස්තුතියි!' || language === 'ta' && 'நன்றி!'}
         </p>
       </div>
     </div>

@@ -1,9 +1,12 @@
 'use client';
+
 import Image from 'next/image'
+import { Col, Row, Space, Button, Spin } from 'antd';
+import { useRouter } from 'next/navigation';
+
 import flag from '../../assets/flag.png';
 import flag1 from '../../assets/flag1.png';
-import { Col, Row, Space, Button } from 'antd';
-import { useRouter } from 'next/navigation';
+
 const LanguagePage = () => {
     const router = useRouter();
 
@@ -26,8 +29,6 @@ const LanguagePage = () => {
             /></Col>
         </Row>
 
-
-
         <div className="relative flex place-items-center mt-28" style={{ textAlign: "center" }}>
             <div>
                 <p className='mt-4 subHeading text-center' style={{ fontSize: "32px", color: "black", marginBottom: "25px" }}>Please select your language</p>
@@ -38,9 +39,9 @@ const LanguagePage = () => {
         </div>
         <div style={{ textAlign: "center", marginTop:"7%" }}>
             <Space wrap>
-                <Button className="ant-btn-outline-white" size='large'>Sinhala</Button>
-                <Button type="default" size='large' className="ant-btn-outline-white">Tamil</Button>
-                <Button type="default" size='large' className="ant-btn-outline-white" onClick={()=> router.push('/pages/select')}>English</Button>
+                <Button className="ant-btn-outline-white" size='large' onClick={()=>{sessionStorage.setItem('block-vote-language', 'si');router.push('/pages/scanBarcode')}}>සිංහල</Button>
+                <Button type="default" size='large' className="ant-btn-outline-white" onClick={()=>{sessionStorage.setItem('block-vote-language', 'ta');router.push('/pages/scanBarcode')}}>தமிழ்</Button>
+                <Button type="default" size='large' className="ant-btn-outline-white" onClick={()=> {sessionStorage.setItem('block-vote-language', 'en'); router.push('/pages/scanBarcode')}}>English</Button>
             </Space>
         </div>
     </main>

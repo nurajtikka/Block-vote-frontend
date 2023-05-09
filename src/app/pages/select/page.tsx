@@ -38,16 +38,12 @@ const ImageButton = ({ buttonName, imageName, isClicked, onClick }: ImageButtonP
 
 const LanguagePage = () => {
     const [clickedButton, setClickedButton] = useState<string | null>(null);
-
-    const handleButtonClick = (buttonName: string) => {
-        if (buttonName === clickedButton) {
-            setClickedButton(null);
-        } else {
-            setClickedButton(buttonName);
-        }
+    const router = useRouter();
+    const handleButtonClick = (partyName: string) => {
+        sessionStorage.setItem('block-vote-party-voted', partyName);
+        router.push('/pages/confirm');
     };
 
-    const router = useRouter();
 
     return (
         <main className="flex min-h-screen flex-col items-center justify-between p-24 test" style={{ marginLeft: '70px', marginTop: '30px', marginRight: "70px" }}>
@@ -63,31 +59,31 @@ const LanguagePage = () => {
             <Row style={{textAlign: "center" , marginTop: "5%"}}>
                 <ImageButton
                     imageName={test1}
-                    buttonName="test1"
-                    onClick={() => handleButtonClick("test1")}
-                    isClicked={clickedButton === "test1"}
+                    buttonName="slpp"
+                    onClick={() => handleButtonClick("slpp")}
+                    isClicked={clickedButton === "slpp"}
                 />
                 <ImageButton
                     imageName={test2}
-                    buttonName="test2"
-                    onClick={() => handleButtonClick("test2")}
-                    isClicked={clickedButton === "test2"}
+                    buttonName="unp"
+                    onClick={() => handleButtonClick("unp")}
+                    isClicked={clickedButton === "unp"}
                 />
                 <ImageButton
                     imageName={test3}
-                    buttonName="test3"
-                    onClick={() => handleButtonClick("test3")}
-                    isClicked={clickedButton === "test3"}
+                    buttonName="jvp"
+                    onClick={() => handleButtonClick("jvp")}
+                    isClicked={clickedButton === "jvp"}
                 />
                 <ImageButton
                     imageName={test4}
-                    buttonName="test4"
-                    onClick={() => handleButtonClick("test4")}
-                    isClicked={clickedButton === "test4"}
+                    buttonName="sjbp"
+                    onClick={() => handleButtonClick("sjbp")}
+                    isClicked={clickedButton === "sjbp"}
                 />
             </Row>
             <Row style={{marginTop: "10%"}}>
-                <Button className="backBtn" size='large' type="dashed" onClick={()=> router.push('/pages/welcome')} icon={<ArrowLeftOutlined />}>Back</Button>
+                <Button className="backBtn" size='large' type="dashed" onClick={()=> router.push('/pages/welcome')} icon={<ArrowLeftOutlined />}>{sessionStorage.getItem('block-vote-language') === 'en' && 'Back' || sessionStorage.getItem('block-vote-language') === 'ta' && 'மீண்டும்' || sessionStorage.getItem('block-vote-language') === 'si' && 'ආපසු'}</Button>
         </Row>
         </main>
     );
