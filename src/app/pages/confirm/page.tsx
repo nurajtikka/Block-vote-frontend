@@ -53,7 +53,7 @@ const ConfirmPage = () => {
 
     <div style={{ textAlign: "center" }}>
       <div style={{ display: "inline-block" }}>
-        <Image src={vote === 'slpp' && test1 || vote === 'unp' && test2 || vote === 'jvp' && test3 || vote === 'sjb' && test4 || ''} alt="flag" width={100} priority />
+        <Image src={vote === 'slpp' && test1 || vote === 'unp' && test2 || vote === 'jjb' && test3 || vote === 'sjb' && test4 || ''} alt="flag" width={100} priority />
       </div>
     </div>
 

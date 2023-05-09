@@ -71,19 +71,19 @@ const LanguagePage = () => {
                 />
                 <ImageButton
                     imageName={test3}
-                    buttonName="jvp"
-                    onClick={() => handleButtonClick("jvp")}
-                    isClicked={clickedButton === "jvp"}
+                    buttonName="jjb"
+                    onClick={() => handleButtonClick("jjb")}
+                    isClicked={clickedButton === "jjb"}
                 />
                 <ImageButton
                     imageName={test4}
-                    buttonName="sjbp"
-                    onClick={() => handleButtonClick("sjbp")}
-                    isClicked={clickedButton === "sjbp"}
+                    buttonName="sjb"
+                    onClick={() => handleButtonClick("sjb")}
+                    isClicked={clickedButton === "sjb"}
                 />
             </Row>
             <Row style={{marginTop: "10%"}}>
-                <Button className="backBtn" size='large' type="dashed" onClick={()=> router.push('/pages/welcome')} icon={<ArrowLeftOutlined />}>{sessionStorage.getItem('block-vote-language') === 'en' && 'Back' || sessionStorage.getItem('block-vote-language') === 'ta' && 'மீண்டும்' || sessionStorage.getItem('block-vote-language') === 'si' && 'ආපසු'}</Button>
+                <Button className="backBtn" size='large' type="dashed" onClick={()=> router.push('/pages/scanBarcode')} icon={<ArrowLeftOutlined />}>{sessionStorage.getItem('block-vote-language') === 'en' && 'Back' || sessionStorage.getItem('block-vote-language') === 'ta' && 'மீண்டும்' || sessionStorage.getItem('block-vote-language') === 'si' && 'ආපසු'}</Button>
         </Row>
         </main>
     );
