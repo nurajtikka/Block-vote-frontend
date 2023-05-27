@@ -1,12 +1,10 @@
 'use client';
 
-import { useRouter } from "next/navigation";
-
-import Button from '../components/Button';
+import { useRouter } from 'next/navigation';
 
 const Profile = () => {
-    const router = useRouter()
+    const router = useRouter();
     router.push('/pages/welcome');
-}
+};
 
 export default Profile;

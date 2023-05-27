@@ -1,23 +1,29 @@
 'use client';
 
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
-import { useRouter } from "next/navigation";
-import Image from "next/image";
-import { Col, Row, Space, Button } from "antd";
+import { useRouter } from 'next/navigation';
+import Image from 'next/image';
+import { Col, Row } from 'antd';
 
-import flag from "../../assets/flag.png";
-import flag1 from "../../assets/flag1.png";
+import flag from '../../assets/flag.png';
+import flag1 from '../../assets/flag1.png';
+// @Nuraj import the app context hook
+import useAppContext from '../../contexts/AppContext';
 
-const WelcomePage = () => {
-    const router = useRouter()
+const WelcomePage = (): JSX.Element => {
+    const router = useRouter();
     const [redirect, setRedirect] = useState(false);
+
+    // @Nuraj get the values from the app context from API calls
+    const { eligible, setVotes, votes } = useAppContext();
+
     useEffect(() => {
         setTimeout(() => {
             setRedirect(true);
         }, 3000);
 
-        if(redirect){
+        if (redirect) {
             router.push('/pages/language');
         }
     }, [redirect]);
@@ -71,4 +77,4 @@ const WelcomePage = () => {
     );
 };
 
-export default WelcomePage;
+export default WelcomePage;

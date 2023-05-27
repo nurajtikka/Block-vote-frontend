@@ -1,19 +1,16 @@
 'use client';
 
 import React from 'react';
-import Link from 'next/link'
+
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { useRouter } from 'next/navigation';
-import { Breadcrumb, Layout, Menu, theme } from 'antd';
+import { Layout, theme } from 'antd';
 
 import styles from './layout.module.scss';
 import '../styles/theme.scss';
-import Button from '../components/Button';
+import { ProvideAppContext } from './contexts/AppContext';
 
-// eslint-disable-next-line no-underscore-dangle
-const MARKETPLACE = process.env._MARKETPLACE;
-
-const { Content, Footer, Header } = Layout;
+const { Content } = Layout;
 
 const RootLayout = ({ children }: { children: React.ReactNode }): React.ReactNode => {
     const {
@@ -48,8 +45,10 @@ const RootLayout = ({ children }: { children: React.ReactNode }): React.ReactNod
                 <title>Block-Vote</title>
             </head>
             <body>
-                <Layout className="layout">
-                    {/* <Header>
+                {/* Added app context provider here */}
+                <ProvideAppContext>
+                    <Layout className="layout">
+                        {/* <Header>
                         <div className="logo" />
                         <Menu
                             theme="dark"
@@ -64,34 +63,28 @@ const RootLayout = ({ children }: { children: React.ReactNode }): React.ReactNod
                             })}
                         />
                     </Header> */}
-                    <Content style={{background: 'white'}}>
-                        {/* <Breadcrumb style={{ 'margin: '16px 0' }}>
+                        <Content style={{ background: 'white' }}>
+                            {/* <Breadcrumb style={{ 'margin: '16px 0' }}>
                             <Breadcrumb.Item>Home</Breadcrumb.Item>
                             <Breadcrumb.Item>List</Breadcrumb.Item>
                             <Breadcrumb.Item>App</Breadcrumb.Item>
                         </Breadcrumb> */}
-                        <div>
-                            <QueryClientProvider client={queryClient}>
-                                <main className={styles.site}>
-                                    <div className={styles.siteContent}>{children}</div>
-                                </main>
-                            </QueryClientProvider>{' '}
-                        </div>
-                        {/* <Button>
+                            <div>
+                                <QueryClientProvider client={queryClient}>
+                                    <main className={styles.site}>
+                                        <div className={styles.siteContent}>{children}</div>
+                                    </main>
+                                </QueryClientProvider>{' '}
+                            </div>
+                            {/* <Button>
                             <Link href="/orders">English</Link>
                         </Button> */}
-                    </Content>
-                    {/* <Footer style={{ textAlign: 'center' }}>
-                        <footer>
-                            &copy; {MARKETPLACE} {new Date().getFullYear()}. All rights reserved
-                        </footer>
-                    </Footer> */}
-                </Layout>
+                        </Content>
+                    </Layout>
+                </ProvideAppContext>
             </body>
         </html>
     );
 };
 
 export default RootLayout;
-
-
