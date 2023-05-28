@@ -2,6 +2,7 @@
 import { AxiosInstance } from 'axios';
 
 import {
+    TPostAuthorizeResponse,
     TGetEligibilityRequest,
     TGetEligibilityResponse,
     TPostVotesRequest,
@@ -10,18 +11,21 @@ import {
 } from './votes.types';
 
 // @Nuraj API base URL - Change this correctly
-const BASE_URL = 'http://localhost:3001';
+const BASE_URL = 'http://192.168.1.10:3001/api/v1';
 
 // @Nuraj API endpoints
 const Votes = (api: AxiosInstance): TVotesSVCEndpoints => {
     const getEligibility = (payload: TGetEligibilityRequest) =>
-        api.post<TGetEligibilityResponse>(`${BASE_URL}/checkEligibility`, payload);
+        api.post<TGetEligibilityResponse>(`${BASE_URL}/voters/checkEligibility`, payload);
 
-    const postVotes = (payload: TPostVotesRequest) => api.post<TPostVotesResponse>(`${BASE_URL}//vote`, payload);
+    const postVotes = (payload: TPostVotesRequest) => api.post<TPostVotesResponse>(`${BASE_URL}/votes/vote`, payload);
+
+    const postAuthorize = () => api.get<TPostAuthorizeResponse>(`${BASE_URL}/fingerprint/scan`);
 
     return {
         getEligibility,
         postVotes,
+        postAuthorize,
     };
 };
 

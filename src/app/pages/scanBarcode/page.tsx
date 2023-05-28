@@ -3,13 +3,14 @@
 import { ChangeEvent, useState } from 'react';
 
 import Image from 'next/image';
-import { Col, Row, Tooltip, Button, Input, Typography } from 'antd';
+import { Col, Row, Button, Input, Typography } from 'antd';
 import { useRouter } from 'next/navigation';
 
 import { ArrowLeftOutlined } from '@ant-design/icons';
 
 import flag from '../../assets/flag.png';
 import flag1 from '../../assets/flag1.png';
+import useAppContext from '../../contexts/AppContext';
 
 const LanguagePage = () => {
     const router = useRouter();
@@ -20,6 +21,7 @@ const LanguagePage = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string>('');
     const { Text } = Typography;
+    const { eligible, isLoading, setNic, votes } = useAppContext();
 
     const changeInput = (nic: ChangeEvent<HTMLInputElement>) => {
         setNicNumber(nic.target.value);
@@ -34,18 +36,7 @@ const LanguagePage = () => {
     const continueToNext = () => {
         setLoading(true);
         setError('');
-        if (nicNumber === '583463500V' || nicNumber === '583463500v') {
-            setError(
-                (language === 'en' && 'You are not eligible to vote.') ||
-                    (language === 'ta' && 'நீங்கள் வாக்களிக்க தகுதியற்றவர்.') ||
-                    (language === 'si' && 'ඔබ ඡන්දය දීමට සුදුසුකම් නොලබයි.') ||
-                    '',
-            );
-        } else {
-            setTimeout(() => {
-                router.push('/pages/select');
-            }, 3000);
-        }
+        setNic(nicNumber);
         setLoading(false);
     };
 
@@ -108,7 +99,7 @@ const LanguagePage = () => {
                         className="ant-btn-outline-white"
                         size="large"
                         onClick={() => continueToNext()}
-                        disabled={!allowContinue}
+                        disabled={!allowContinue || isLoading}
                         loading={loading}
                     >
                         {(language === 'en' && 'Confirm') ||
@@ -123,7 +114,7 @@ const LanguagePage = () => {
                     className="backBtn"
                     size="large"
                     type="dashed"
-                    icon={<ArrowLeftOutlined />}
+                    icon={<ArrowLeftOutlined rev="" />}
                     onClick={() => {
                         router.push('/pages/language');
                     }}

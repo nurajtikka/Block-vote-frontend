@@ -10,10 +10,12 @@ import test3 from '../../assets/test3.png';
 import test4 from '../../assets/test4.png';
 import flag from '../../assets/flag.png';
 import flag1 from '../../assets/flag1.png';
+import useAppContext from '../../contexts/AppContext';
 
 const ConfirmPage = () => {
     const router = useRouter();
-    const vote = sessionStorage.getItem('block-vote-party-voted');
+    const { nic, selectedParty, setParty, setVotes } = useAppContext();
+    const vote = selectedParty;
     const language = sessionStorage.getItem('block-vote-language');
     return (
         <main
@@ -54,10 +56,10 @@ const ConfirmPage = () => {
                 <div style={{ display: 'inline-block' }}>
                     <Image
                         src={
-                            (vote === 'slpp' && test1) ||
-                            (vote === 'unp' && test2) ||
-                            (vote === 'jjb' && test3) ||
-                            (vote === 'sjb' && test4) ||
+                            (vote === 'SLPP' && test1) ||
+                            (vote === 'UNP' && test2) ||
+                            (vote === 'JJB' && test3) ||
+                            (vote === 'SJB' && test4) ||
                             ''
                         }
                         alt="flag"
@@ -72,7 +74,9 @@ const ConfirmPage = () => {
                     <Button
                         className="ant-btn-outline-white"
                         size="large"
-                        onClick={() => router.push('/pages/thankyou')}
+                        onClick={() => {
+                            setParty(selectedParty);
+                        }}
                     >
                         {(language === 'en' && 'Confirm') ||
                             (language === 'si' && 'තහවුරු කරන්න') ||

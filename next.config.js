@@ -6,6 +6,6 @@ module.exports = {
         appDir: true,
     },
     compiler: {
-        removeConsole: true,
+        removeConsole: false,
     },
 };

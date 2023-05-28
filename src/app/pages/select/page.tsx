@@ -13,6 +13,7 @@ import test1 from '../../assets/test1.jpeg';
 import test2 from '../../assets/test2.png';
 import test3 from '../../assets/test3.png';
 import test4 from '../../assets/test4.png';
+import useAppContext from '../../contexts/AppContext';
 
 interface ImageButtonProps {
     imageName: StaticImageData;
@@ -23,70 +24,77 @@ interface ImageButtonProps {
 
 const ImageButton = ({ buttonName, imageName, isClicked, onClick }: ImageButtonProps) => (
     <Col span={6}>
-        <Button className={`button ${isClicked ? "clicked" : ""}`} onClick={onClick}>
+        <Button className={`button ${isClicked ? 'clicked' : ''}`} onClick={onClick}>
             <Image
                 src={imageName}
                 alt={buttonName}
                 className=""
                 width={120}
                 priority
-                style={{ marginLeft: "20px", margin: "15px" }}
+                style={{ marginLeft: '20px', margin: '15px' }}
             />
         </Button>
     </Col>
 );
 
-const LanguagePage = () => {
+const SelectParty = () => {
     const [clickedButton, setClickedButton] = useState<string | null>(null);
     const router = useRouter();
+    const { setSelectedParty } = useAppContext();
     const handleButtonClick = (partyName: string) => {
-        sessionStorage.setItem('block-vote-party-voted', partyName);
+        setSelectedParty(partyName);
         router.push('/pages/confirm');
     };
 
-
     return (
-        <main className="flex min-h-screen flex-col items-center justify-between p-24 test" style={{ marginLeft: '70px', marginTop: '30px', marginRight: "70px" }}>
+        <main
+            className="flex min-h-screen flex-col items-center justify-between p-24 test"
+            style={{ marginLeft: '70px', marginTop: '30px', marginRight: '70px' }}
+        >
             <Row>
-                <Image
-                    src={flag}
-                    alt="flag"
-                    className=""
-                    width={400}
-                    priority
-                />
+                <Image src={flag} alt="flag" className="" width={400} priority />
             </Row>
-            <Row style={{textAlign: "center" , marginTop: "5%"}}>
+            <Row style={{ textAlign: 'center', marginTop: '5%' }}>
                 <ImageButton
                     imageName={test1}
-                    buttonName="slpp"
-                    onClick={() => handleButtonClick("slpp")}
-                    isClicked={clickedButton === "slpp"}
+                    buttonName="SLPP"
+                    onClick={() => handleButtonClick('SLPP')}
+                    isClicked={clickedButton === 'SLPP'}
                 />
                 <ImageButton
                     imageName={test2}
-                    buttonName="unp"
-                    onClick={() => handleButtonClick("unp")}
-                    isClicked={clickedButton === "unp"}
+                    buttonName="UNP"
+                    onClick={() => handleButtonClick('UNP')}
+                    isClicked={clickedButton === 'UNP'}
                 />
                 <ImageButton
                     imageName={test3}
-                    buttonName="jjb"
-                    onClick={() => handleButtonClick("jjb")}
-                    isClicked={clickedButton === "jjb"}
+                    buttonName="JJB"
+                    onClick={() => handleButtonClick('JJB')}
+                    isClicked={clickedButton === 'JJB'}
                 />
                 <ImageButton
                     imageName={test4}
-                    buttonName="sjb"
-                    onClick={() => handleButtonClick("sjb")}
-                    isClicked={clickedButton === "sjb"}
+                    buttonName="SJB"
+                    onClick={() => handleButtonClick('SJB')}
+                    isClicked={clickedButton === 'SJB'}
                 />
             </Row>
-            <Row style={{marginTop: "10%"}}>
-                <Button className="backBtn" size='large' type="dashed" onClick={()=> router.push('/pages/scanBarcode')} icon={<ArrowLeftOutlined />}>{sessionStorage.getItem('block-vote-language') === 'en' && 'Back' || sessionStorage.getItem('block-vote-language') === 'ta' && 'மீண்டும்' || sessionStorage.getItem('block-vote-language') === 'si' && 'ආපසු'}</Button>
-        </Row>
+            <Row style={{ marginTop: '10%' }}>
+                <Button
+                    className="backBtn"
+                    size="large"
+                    type="dashed"
+                    onClick={() => router.push('/pages/scanBarcode')}
+                    icon={<ArrowLeftOutlined rev="" />}
+                >
+                    {(sessionStorage.getItem('block-vote-language') === 'en' && 'Back') ||
+                        (sessionStorage.getItem('block-vote-language') === 'ta' && 'மீண்டும்') ||
+                        (sessionStorage.getItem('block-vote-language') === 'si' && 'ආපසු')}
+                </Button>
+            </Row>
         </main>
     );
 };
 
-export default LanguagePage;
+export default SelectParty;
