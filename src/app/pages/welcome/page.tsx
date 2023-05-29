@@ -8,14 +8,14 @@ import { Col, Row } from 'antd';
 
 import flag from '../../assets/flag.png';
 import flag1 from '../../assets/flag1.png';
-// @Nuraj import the app context hook
+//  import the app context hook
 import useAppContext from '../../contexts/AppContext';
 
 const WelcomePage = (): JSX.Element => {
     const router = useRouter();
     const [redirect, setRedirect] = useState(false);
 
-    // @Nuraj get the values from the app context from API calls
+    //  get the values from the app context from API calls
     const { eligible, setVotes, votes } = useAppContext();
 
     useEffect(() => {

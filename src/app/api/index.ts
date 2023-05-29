@@ -4,7 +4,7 @@ import Axios, { AxiosInstance } from 'axios';
 import votes from './votes/votes';
 import { TVotesSVCEndpoints } from './votes/votes.types';
 
-// @Nuraj API instance
+//  API instance
 let api: AxiosInstance = Axios.create({
     baseURL: 'uninitialized!',
 });

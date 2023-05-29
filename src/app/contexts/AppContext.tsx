@@ -9,7 +9,7 @@ import { votesSVC } from '../api';
 import { TAppContext } from './AppContext.types';
 
 const INITIAL_DATA = {
-    // @Nuraj values
+    //  values
     isLoading: true,
     nic: '',
     selectedParty: '',
@@ -17,7 +17,7 @@ const INITIAL_DATA = {
     votes: null,
     eligible: null,
     isAuthorized: false,
-    // @Nurajfunctions
+    // functions
     setEligible: () => undefined,
     setVotes: () => undefined,
     setNic: () => undefined,
@@ -32,19 +32,19 @@ type TProvideAppContext = { children: JSX.Element };
 export const ProvideAppContext = ({ children }: TProvideAppContext): JSX.Element => {
     const router = useRouter();
     const language = sessionStorage.getItem('block-vote-language');
-    // @Nuraj API states
+    //  API states
     const [isLoading, setIsLoading] = useState<boolean>(INITIAL_DATA.isLoading);
     const [votes, setVotes] = useState<TPostVotesResponse | null>(INITIAL_DATA.votes);
     const [eligible, setEligible] = useState<TGetEligibilityResponse | null>(INITIAL_DATA.eligible);
 
-    // @Nuraj User states
+    //  User states
     const [nic, setNic] = useState<string>(INITIAL_DATA.nic);
     const [selectedParty, setSelectedParty] = useState<string>(INITIAL_DATA.selectedParty);
     const [party, setParty] = useState<string>(INITIAL_DATA.party);
     const [isAuthorized, setIsAuthorized] = useState<boolean>(INITIAL_DATA.isAuthorized);
     const [eligibleError, setEligibleError] = useState<boolean>(true);
 
-    // @Nuraj  get user eligibility api call
+    //   get user eligibility api call
     const getUserEligibility = useCallback(async (userNic: string): Promise<void> => {
         setIsLoading(true);
         try {
@@ -72,7 +72,7 @@ export const ProvideAppContext = ({ children }: TProvideAppContext): JSX.Element
         }
     }, []);
 
-    // @Nuraj post user votes api call
+    //  post user votes api call
     const getUserVotes = useCallback(async (userNic: string, userParty: string): Promise<void> => {
         setIsLoading(true);
         try {
@@ -88,7 +88,7 @@ export const ProvideAppContext = ({ children }: TProvideAppContext): JSX.Element
         }
     }, []);
 
-    // @Nuraj  get user eligibility api call
+    //   get user eligibility api call
     const getAuthorized = useCallback(async (): Promise<void> => {
         setIsLoading(true);
         try {
@@ -110,7 +110,7 @@ export const ProvideAppContext = ({ children }: TProvideAppContext): JSX.Element
         }
     }, []);
 
-    // @Nuraj API triggers for fingerpri
+    //  API triggers for fingerpri
     useEffect(() => {
         setIsLoading(true);
         if (nic) {
@@ -134,7 +134,7 @@ export const ProvideAppContext = ({ children }: TProvideAppContext): JSX.Element
         setIsLoading(false);
     }, [getUserVotes, nic, party]);
 
-    // @Nuraj context provider parameters
+    //  context provider parameters
     const ctx = useMemo<TAppContext>(
         () => ({
             selectedParty,
