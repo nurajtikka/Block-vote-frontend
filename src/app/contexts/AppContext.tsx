@@ -92,7 +92,7 @@ export const ProvideAppContext = ({ children }: TProvideAppContext): JSX.Element
     const getAuthorized = useCallback(async (): Promise<void> => {
         setIsLoading(true);
         try {
-            const { data } = await votesSVC().postAuthorize();
+            const { data } = await votesSVC().getAuthorize();
             if (data.message === 'Authorized') {
                 setIsAuthorized(true);
                 router.push('/pages/select');
@@ -110,7 +110,7 @@ export const ProvideAppContext = ({ children }: TProvideAppContext): JSX.Element
         }
     }, []);
 
-    // @Nuraj API triggers
+    // @Nuraj API triggers for fingerpri
     useEffect(() => {
         setIsLoading(true);
         if (nic) {

@@ -11,16 +11,16 @@ type TGetEligibility = (payload: TGetEligibilityRequest) => Promise<AxiosRespons
 // @Nuraj types for votes
 export type TPostVotesRequest = { nic: string; party: string };
 export type TPostVotesResponse = { message: string };
-export type TPostAuthorizeResponse = { message: string };
+export type TGetAuthorizeResponse = { message: string };
 
 // @Nuraj api request type
 type TPostVotes = (payload: TPostVotesRequest) => Promise<AxiosResponse<TPostVotesResponse>>;
 
 // @Nuraj api request type
-type TPostAuthorize = () => Promise<AxiosResponse<TPostAuthorizeResponse>>;
+type TGetAuthorize = () => Promise<AxiosResponse<TGetAuthorizeResponse>>;
 
 export type TVotesSVCEndpoints = {
     getEligibility: TGetEligibility;
     postVotes: TPostVotes;
-    postAuthorize: TPostAuthorize;
+    getAuthorize: TGetAuthorize;
 };
