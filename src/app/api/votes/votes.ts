@@ -11,7 +11,8 @@ import {
 } from './votes.types';
 
 //  API base URL - Change this correctly
-const BASE_URL = 'http://192.168.8.187:3001/api/v1';
+// const BASE_URL = 'http://192.168.8.187:3001/_svc/block-vote/api/v1';
+const BASE_URL = 'http://localhost:3001/_svc/block-vote/api/v1';
 
 //  API endpoints
 const Votes = (api: AxiosInstance): TVotesSVCEndpoints => {
