@@ -9,9 +9,10 @@ export type TGetEligibilityResponse = { message: string };
 type TGetEligibility = (payload: TGetEligibilityRequest) => Promise<AxiosResponse<TGetEligibilityResponse>>;
 
 //  types for votes
-export type TPostVotesRequest = { nic: string; party: string };
+export type TPostVoteRequest = { nic_id: string; party_id: string, candidate_id: string };
 export type TPostVoterInformationRequest = { nic_id: string };
-export type TPostVotesResponse = { message: string };
+export type TPostCandidateByDistrictRequest = { district: string, party: string };
+export type TPostVoteResponse = { message: string };
 export type TGetAuthorizeResponse = { message: string };
 export type TPostVoterInformationResponse = {
     voters: {
@@ -24,16 +25,28 @@ export type TPostVoterInformationResponse = {
     }[]
 };
 
+export type TPostCandidateByDistrictResponse = {
+    candidates: {
+        _id: string;
+        name: string;
+        party: string;
+        district: string;
+
+    }[]
+}
+
 //  api request type
-type TPostVotes = (payload: TPostVotesRequest) => Promise<AxiosResponse<TPostVotesResponse>>;
+type TPostVote = (payload: TPostVoteRequest) => Promise<AxiosResponse<TPostVoteResponse>>;
 type TPostVoterInformation = (payload: TPostVoterInformationRequest) => Promise<AxiosResponse<TPostVoterInformationResponse>>;
+type TPostCandidateByPartyAndDistrict = (payload: TPostCandidateByDistrictRequest) => Promise<AxiosResponse<TPostCandidateByDistrictResponse>>;
 
 //  api request type
 type TGetAuthorize = () => Promise<AxiosResponse<TGetAuthorizeResponse>>;
 
 export type TVotesSVCEndpoints = {
     getEligibility: TGetEligibility;
-    postVotes: TPostVotes;
+    postVote: TPostVote;
     getAuthorize: TGetAuthorize;
     postVoterInformation: TPostVoterInformation;
+    postCandidateByPartyAndDistrict: TPostCandidateByPartyAndDistrict;
 };

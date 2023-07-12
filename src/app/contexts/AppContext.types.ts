@@ -1,19 +1,22 @@
-import { TGetEligibilityResponse, TPostVoterInformationRequest, TPostVoterInformationResponse, TPostVotesResponse } from '../api/votes/votes.types';
+import { TGetEligibilityResponse, TPostCandidateByDistrictRequest, TPostCandidateByDistrictResponse, TPostVoteRequest, TPostVoterInformationRequest, TPostVoterInformationResponse, TPostVoteResponse } from '../api/votes/votes.types';
 
 export type TAppContext = {
     //  values
     selectedParty: string;
     isLoading: boolean;
-    votes: TPostVotesResponse | null;
+    votes: TPostVoteResponse | null;
     eligible: TGetEligibilityResponse | null;
     nic: string;
     party: string;
     voterInformation: TPostVoterInformationResponse | null;
+    candidateByDistrictInfo: TPostCandidateByDistrictResponse | null;
     //  functions
     setNic: (value: string) => void;
     setParty: (value: string) => void;
     setSelectedParty: (value: string) => void;
-    setVotes: (value: TPostVotesResponse) => void;
+    setVotes: (value: TPostVoteResponse) => void;
     setEligible: (value: TGetEligibilityResponse) => void;
     setNicId: (value: string) => void;
+    setCandidateRequestInfo: (value: TPostCandidateByDistrictRequest) => void;
+    setCastVote: (value: TPostVoteRequest) => void;
 };

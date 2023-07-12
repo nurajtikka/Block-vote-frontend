@@ -13,8 +13,11 @@ import { useRouter } from "next/navigation";
 
 import {
   TGetEligibilityResponse,
+  TPostCandidateByDistrictRequest,
+  TPostCandidateByDistrictResponse,
   TPostVoterInformationResponse,
-  TPostVotesResponse,
+  TPostVoteRequest,
+  TPostVoteResponse,
 } from "../api/votes/votes.types";
 import { votesSVC } from "../api";
 import { TAppContext } from "./AppContext.types";
@@ -29,6 +32,7 @@ const INITIAL_DATA = {
   eligible: null,
   isAuthorized: false,
   voterInformation: null,
+  candidateByDistrictInfo: null,
   // functions
   setEligible: () => undefined,
   setVotes: () => undefined,
@@ -38,6 +42,8 @@ const INITIAL_DATA = {
   setSelectedParty: () => undefined,
   setNicId: () => undefined,
   setVoterInformation: () => undefined,
+  setCandidateRequestInfo: () => undefined,
+  setCastVote: () => undefined,
 };
 
 const appContext = createContext<TAppContext>(INITIAL_DATA);
@@ -50,7 +56,7 @@ export const ProvideAppContext = ({
   const language = sessionStorage.getItem("block-vote-language");
   //  API states
   const [isLoading, setIsLoading] = useState<boolean>(INITIAL_DATA.isLoading);
-  const [votes, setVotes] = useState<TPostVotesResponse | null>(
+  const [votes, setVotes] = useState<TPostVoteResponse | null>(
     INITIAL_DATA.votes
   );
   const [eligible, setEligible] = useState<TGetEligibilityResponse | null>(
@@ -69,7 +75,17 @@ export const ProvideAppContext = ({
   const [eligibleError, setEligibleError] = useState<boolean>(true);
   const [nicId, setNicId] = useState<string>("");
   const [voterInformation, setVoterInformation] =
-    useState<TPostVoterInformationResponse | null>(null);
+    useState<TPostVoterInformationResponse | null>(
+      INITIAL_DATA.voterInformation
+    );
+  const [candidateRequestInfo, setCandidateRequestInfo] =
+    useState<TPostCandidateByDistrictRequest | null>(null);
+  const [candidateByDistrictInfo, setCandidateByDistrictInfo] =
+    useState<TPostCandidateByDistrictResponse | null>(
+      INITIAL_DATA.candidateByDistrictInfo
+    );
+
+  const [castVote, setCastVote] = useState<TPostVoteRequest | null>(null);
 
   //   get user eligibility api call
   const getUserEligibility = useCallback(
@@ -78,7 +94,7 @@ export const ProvideAppContext = ({
       try {
         const { data } = await votesSVC().getEligibility({ nic_id: userNic });
 
-        console.log(data);
+        // console.log(data);
         if (data.message === "Already voted") {
           if (language === "en") message.error("You have already voted!");
           if (language === "ta")
@@ -113,30 +129,6 @@ export const ProvideAppContext = ({
     []
   );
 
-  //  post user votes api call
-  const getUserVotes = useCallback(
-    async (userNic: string, userParty: string): Promise<void> => {
-      setIsLoading(true);
-      try {
-        const { data } = await votesSVC().postVotes({
-          nic: userNic,
-          party: userParty,
-        });
-        setVotes(data);
-        router.push("/pages/thankyou");
-        setIsLoading(false);
-      } catch (error) {
-        setIsLoading(false);
-        if (language === "en") message.error("Couldn't get vote details!");
-        if (language === "ta")
-          message.error("வாக்கு விவரங்களைப் பெற முடியவில்லை!");
-        if (language === "si")
-          message.error("ඡන්ද විස්තර ලබා ගැනීමට නොහැකි විය!");
-      }
-    },
-    []
-  );
-
   //   get user eligibility api call
   const getAuthorized = useCallback(async (): Promise<void> => {
     setIsLoading(true);
@@ -161,14 +153,14 @@ export const ProvideAppContext = ({
     }
   }, []);
 
-  // post request to get uesr information
+  // post request to get voters information
   const postVoterInformation = useCallback(
     async (nic: string): Promise<void> => {
       setIsLoading(true);
       try {
         const { data } = await votesSVC().postVoterInformation({ nic_id: nic });
         setVoterInformation(data);
-        console.log(data);
+        // console.log(data);
         setIsLoading(false);
       } catch (error) {
         setIsLoading(false);
@@ -176,6 +168,56 @@ export const ProvideAppContext = ({
         if (language === "ta") message.error("பயனர் தகவலைப் பெற முடியவில்லை!");
         if (language === "si")
           message.error("පරිශීලක තොරතුරු ලබා ගැනීමට නොහැකි විය!");
+      }
+    },
+    []
+  );
+
+  const postCandidateByDistrict = useCallback(
+    async (district: string, party: string): Promise<void> => {
+      setIsLoading(true);
+      try {
+        const { data } = await votesSVC().postCandidateByPartyAndDistrict({
+          district: district,
+          party: party,
+        });
+        setCandidateByDistrictInfo(data);
+        setIsLoading(false);
+      } catch (error) {
+        setIsLoading(false);
+        if (language === "en")
+          message.error("Couldn't get candidate information!");
+        if (language === "ta")
+          message.error("வேட்பாளர் தகவலைப் பெற முடியவில்லை!");
+        if (language === "si")
+          message.error("අපේක්ෂක තොරතුරු ලබා ගැනීමට නොහැකි විය!");
+      }
+    },
+    []
+  );
+
+  const postVote = useCallback(
+    async (
+      nic_id: string,
+      party_id: string,
+      candidate_id: string
+    ): Promise<void> => {
+      setIsLoading(true);
+      try {
+        const { data } = await votesSVC().postVote({
+          nic_id: nic_id,
+          party_id: party_id,
+          candidate_id: candidate_id,
+        });
+        setVotes(data);
+        router.push("/pages/thankyou");
+        setIsLoading(false);
+      } catch (error) {
+        setIsLoading(false);
+        if (language === "en") message.error("Couldn't cast your vote");
+        if (language === "ta") message.error("வாக்களிக்க முடியவில்லை");
+        if (language === "si")
+          message.error("ඔබේ ඡන්දය ප්‍රකාශ කිරීමට නොහැකි විය");
       }
     },
     []
@@ -193,7 +235,8 @@ export const ProvideAppContext = ({
     } else {
       if (language === "en") message.error("Your NIC number is not detected.");
       if (language === "ta") message.error("உங்கள் NIC எண் கண்டறியப்படவில்லை.");
-      if (language === "si") message.error("ඔබගේ ජාතික හැඳුනුම්පත් අංකය අනාවරණය කර නොමැත.");
+      if (language === "si")
+        message.error("ඔබගේ ජාතික හැඳුනුම්පත් අංකය අනාවරණය කර නොමැත.");
     }
 
     if (nic && !eligibleError) {
@@ -207,18 +250,35 @@ export const ProvideAppContext = ({
         message.info(
           "අවසර දීමට සහ ඉදිරියට යාමට ඔබගේ ඇඟිලි සලකුණ පරිලෝකනය කරන්න."
         );
-      getAuthorized();
+      // getAuthorized();
     }
     setIsLoading(false);
   }, [eligibleError, getAuthorized, getUserEligibility, nicId, nic]);
 
   useEffect(() => {
     setIsLoading(true);
-    if (nic && party) {
-      getUserVotes(nic, party);
+    if (castVote) {
+      postVote(castVote.nic_id, castVote.party_id, castVote.candidate_id);
     }
+
+    if (candidateRequestInfo) {
+      postCandidateByDistrict(
+        candidateRequestInfo.district,
+        candidateRequestInfo.party
+      );
+    } else {
+      if (language === "en")
+        message.error("Your district or selected party is invalid.");
+      if (language === "ta")
+        message.error(
+          "உங்கள் மாவட்டம் அல்லது தேர்ந்தெடுக்கப்பட்ட கட்சி தவறானது."
+        );
+      if (language === "si")
+        message.error("ඔබගේ දිස්ත්‍රික්කය හෝ තෝරාගත් පාර්ශවය වලංගු නොවේ.");
+    }
+
     setIsLoading(false);
-  }, [getUserVotes, nic, party]);
+  }, [castVote, nic, party, candidateRequestInfo]);
 
   //  context provider parameters
   const ctx = useMemo<TAppContext>(
@@ -231,6 +291,7 @@ export const ProvideAppContext = ({
       nic,
       party,
       voterInformation,
+      candidateByDistrictInfo,
       setParty,
       setNic,
       setVotes,
@@ -238,6 +299,8 @@ export const ProvideAppContext = ({
       setSelectedParty,
       setNicId,
       setVoterInformation,
+      setCandidateRequestInfo,
+      setCastVote,
     }),
     [
       selectedParty,
@@ -248,6 +311,7 @@ export const ProvideAppContext = ({
       nic,
       party,
       voterInformation,
+      candidateByDistrictInfo,
       setNic,
       setParty,
       setVotes,
@@ -255,6 +319,8 @@ export const ProvideAppContext = ({
       setSelectedParty,
       setNicId,
       setVoterInformation,
+      setCandidateRequestInfo,
+      setCastVote,
     ]
   );
   return <appContext.Provider value={ctx}>{children}</appContext.Provider>;
