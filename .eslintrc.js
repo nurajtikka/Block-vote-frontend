@@ -1,3 +1,7 @@
+// eslint-disable prettier/prettier
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const path = require('path');
+
 module.exports = {
     root: true,
     env: {
@@ -15,7 +19,6 @@ module.exports = {
         'plugin:@typescript-eslint/eslint-recommended',
         'plugin:@typescript-eslint/recommended',
         'next',
-        'next/core-web-vitals',
         'prettier',
     ],
     globals: {
@@ -25,11 +28,19 @@ module.exports = {
     parser: '@typescript-eslint/parser',
     plugins: ['prettier', '@typescript-eslint', 'sort-destructure-keys', 'json'],
     rules: {
+        // For marketplace configs
+        'import/no-unresolved': [
+            2,
+            {
+                ignore: ['@noonConfig', '@marketplaceConfig'],
+            },
+        ],
         // Prettier config
         'prettier/prettier': [
             1,
             {
                 jsxSingleQuote: false,
+                jsxBracketSameLine: true,
                 printWidth: 120,
                 tabWidth: 4,
                 singleQuote: true,
@@ -58,6 +69,13 @@ module.exports = {
         'json/comment-not-permitted': 'error',
         'json/schema-resolve-error': 'error',
         'json/unknown': 1,
+        // Monorepo compatibility
+        'import/no-extraneous-dependencies': [
+            'error',
+            {
+                packageDir: [__dirname, path.join(__dirname, 'core')],
+            },
+        ],
         // So that .ts and .tsx should not be in imports
         'import/extensions': [
             'error',
@@ -82,19 +100,29 @@ module.exports = {
                 ],
                 pathGroups: [
                     {
-                        pattern: '@*/**',
-                        group: 'external',
+                        pattern: 'react',
+                        group: 'builtin',
+                        position: 'before',
+                    },
+                    {
+                        pattern: '@com /**',
+                        group: 'internal',
+                        position: 'after',
+                    },
+                    {
+                        pattern: '@com/core/**/contexts /**',
+                        group: 'unknown',
                         position: 'after',
                     },
                     {
                         pattern: '@*Config',
-                        group: 'external',
+                        group: 'sibling',
                         position: 'after',
                     },
                     {
-                        pattern: 'react',
-                        group: 'builtin',
-                        position: 'before',
+                        pattern: '.**',
+                        group: 'object',
+                        position: 'after',
                     },
                 ],
                 pathGroupsExcludedImportTypes: ['react'],
@@ -140,6 +168,14 @@ module.exports = {
         // Disable base rule as it can report incorrect errors https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-shadow.md#how-to-use
         'no-shadow': 'off',
         '@typescript-eslint/no-shadow': ['error'],
+        '@next/next/no-img-element': 'off',
+        '@typescript-eslint/explicit-module-boundary-types': 'off',
     },
-    ignorePatterns: ['**/lib/**', '**/package.json'],
+    ignorePatterns: [
+        '**/lib /**',
+        'widgets/node_modules/**', // hmm
+        '**/package.json',
+        'node_modules/',
+        '**/.next/**',
+    ],
 };

@@ -2,10 +2,12 @@
   "compilerOptions": {
     "target": "es5",
     "lib": [
+      "es6",
       "dom",
       "dom.iterable",
       "esnext"
     ],
+    "noImplicitAny": false, // remove this later
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -20,6 +22,9 @@
     "incremental": true,
     "plugins": [
       {
+        "name": "@typescript-eslint"
+      },
+      {
         "name": "next"
       }
     ]
@@ -31,6 +36,9 @@
     ".next/types/**/*.ts"
   ],
   "exclude": [
+    ".github",
+    ".vscode",
+    ".yarn",
     "node_modules"
   ]
 }

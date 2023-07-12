@@ -1,13 +1,12 @@
 {
     "recommendations": [
-        "blanu.vscode-styled-jsx",
+        "coenraads.bracket-pair-colorizer",
         "dbaeumer.vscode-eslint",
         "dzannotti.vscode-babel-coloring",
-        "stylelint.vscode-stylelint"
+        "jpoissonnier.vscode-styled-components",
     ],
     "unwantedRecommendations": [
         "esbenp.prettier-vscode",
-        "ms-vscode.vscode-typescript-tslint-plugin",
-        "styled-components.vscode-styled-components"
+        "ms-vscode.vscode-typescript-tslint-plugin"
     ]
 }
