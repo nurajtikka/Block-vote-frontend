@@ -250,7 +250,7 @@ export const ProvideAppContext = ({
         message.info(
           "අවසර දීමට සහ ඉදිරියට යාමට ඔබගේ ඇඟිලි සලකුණ පරිලෝකනය කරන්න."
         );
-      // getAuthorized();
+      getAuthorized();
     }
     setIsLoading(false);
   }, [eligibleError, getAuthorized, getUserEligibility, nicId, nic]);
