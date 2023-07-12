@@ -3,8 +3,12 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "dev": "next dev",
+        "dev": "yarn msg && PORT=30020 concurrently -k -n \"N,PROXY\" -i \"next dev\" \"yarn start-ssl-proxy\"",
         "build": "next build",
+        "build-ssl-proxy": "yarn build && PORT=30020 concurrently -k -n \"N,PROXY\" \"next start\" \"yarn start-ssl-proxy\"",
+        "msg": "echo \"\n\n--> https://localhost:3002/ \n\n\"",
+        "start-ssl-dev-proxy": "local-ssl-proxy --source 3002 --target 3000",
+        "start-ssl-proxy": "local-ssl-proxy --source 3002 --target $PORT",
         "start": "next start",
         "lint": "next lint"
     },
@@ -12,8 +16,8 @@
         "@ant-design/icons": "^5.0.1",
         "@types/antd": "^1.0.0",
         "@types/node": "16.11.11",
-        "@types/react": "18.0.25",
-        "@types/react-dom": "18.0.9",
+        "@types/react": "18.2.14",
+        "@types/react-dom": "18.2.6",
         "@typescript-eslint/eslint-plugin": "^4.8.2",
         "@typescript-eslint/parser": "^4.8.2",
         "antd": "^5.4.5",
@@ -70,8 +74,8 @@
         }
     },
     "resolutions": {
-        "@types/react": "18.0.25",
-        "@types/react-dom": "18.0.9"
+        "@types/react": "18.2.14",
+        "@types/react-dom": "18.2.6"
     },
     "postcss": {
         "plugins": [
@@ -91,5 +95,5 @@
             "postcss-rtl"
         ]
     },
-    "packageManager": "yarn@4.0.0-rc.32"
+    "packageManager": "yarn@4.0.0-rc.6"
 }
