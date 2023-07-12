@@ -100,6 +100,8 @@ import { Layout, Menu, theme, Typography } from "antd";
 import type { MenuProps } from "antd";
 import Image from "next/image";
 
+import { ProvideAppContext } from "./contexts/AppContext";
+
 const { Header, Sider, Content } = Layout;
 const { Title } = Typography;
 
@@ -122,53 +124,55 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Layout>
-          <Sider collapsed={false}>
-            <div className="demo-logo-vertical">
-              <Image
-                src="/logo.jpg"
-                alt="Block Vote Logo"
-                width={195}
-                height={95}
-              />
-            </div>
-            <Menu
-              theme="dark"
-              mode="inline"
-              onClick={onClick}
-              defaultSelectedKeys={["dashboard"]}
-              selectedKeys={[current]}
-            //   items={[
-            //     {
-            //       key: "dashboard",
-            //       icon: <AreaChartOutlined />,
-            //       label: "Dashboard",
-            //     },
-            //     {
-            //       key: "campaignData",
-            //       icon: <DatabaseOutlined />,
-            //       label: "Campaign Data",
-            //     },
-            //   ]}
-            />
-          </Sider>
+        <ProvideAppContext>
           <Layout>
-            {/* <Header style={{ padding: "0 15px", background: colorBgContainer }}>
+            <Sider collapsed={false}>
+              <div className="demo-logo-vertical">
+                <Image
+                  src="/logo.jpg"
+                  alt="Block Vote Logo"
+                  width={195}
+                  height={95}
+                />
+              </div>
+              <Menu
+                theme="dark"
+                mode="inline"
+                onClick={onClick}
+                defaultSelectedKeys={["dashboard"]}
+                selectedKeys={[current]}
+                //   items={[
+                //     {
+                //       key: "dashboard",
+                //       icon: <AreaChartOutlined />,
+                //       label: "Dashboard",
+                //     },
+                //     {
+                //       key: "campaignData",
+                //       icon: <DatabaseOutlined />,
+                //       label: "Campaign Data",
+                //     },
+                //   ]}
+              />
+            </Sider>
+            <Layout>
+              {/* <Header style={{ padding: "0 15px", background: colorBgContainer }}>
               <Title level={2} style={{ color: "gray" }}>
                 {current === "dashboard" ? "Dashboard" : "Campaign Data"}
               </Title>
             </Header> */}
-            <Content
-              style={{
-                margin: "24px 16px",
-                minHeight: 280,
-                background: "#f7f7fa",
-              }}
-            >
-              {children}
-            </Content>
+              <Content
+                style={{
+                  margin: "24px 16px",
+                  minHeight: 280,
+                  background: "#f7f7fa",
+                }}
+              >
+                {children}
+              </Content>
+            </Layout>
           </Layout>
-        </Layout>
+        </ProvideAppContext>
       </body>
     </html>
   );

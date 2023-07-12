@@ -17,7 +17,7 @@ const BASE_URL = 'http://localhost:3001/_svc/block-vote/api/v1';
 //  API endpoints
 const Votes = (api: AxiosInstance): TVotesSVCEndpoints => {
     const getEligibility = (payload: TGetEligibilityRequest) =>
-        api.post<TGetEligibilityResponse>(`${BASE_URL}/voters/checkEligibility`, payload);
+        api.post<TGetEligibilityResponse>(`${BASE_URL}/voters/eligibility/verification`, payload);
 
     const postVotes = (payload: TPostVotesRequest) => api.post<TPostVotesResponse>(`${BASE_URL}/votes/vote`, payload);
 

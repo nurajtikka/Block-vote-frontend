@@ -2,7 +2,7 @@
 import { AxiosResponse } from 'axios';
 
 //  types for checking eligibility
-export type TGetEligibilityRequest = { nic: string };
+export type TGetEligibilityRequest = { nic_id: string };
 export type TGetEligibilityResponse = { message: string };
 
 //  API request type
