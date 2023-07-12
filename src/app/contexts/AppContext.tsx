@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 
 import {
   TGetEligibilityResponse,
+  TPostVoterInformationResponse,
   TPostVotesResponse,
 } from "../api/votes/votes.types";
 import { votesSVC } from "../api";
@@ -27,6 +28,7 @@ const INITIAL_DATA = {
   votes: null,
   eligible: null,
   isAuthorized: false,
+  voterInformation: null,
   // functions
   setEligible: () => undefined,
   setVotes: () => undefined,
@@ -34,6 +36,8 @@ const INITIAL_DATA = {
   setParty: () => undefined,
   setIsAuthorized: () => undefined,
   setSelectedParty: () => undefined,
+  setNicId: () => undefined,
+  setVoterInformation: () => undefined,
 };
 
 const appContext = createContext<TAppContext>(INITIAL_DATA);
@@ -63,6 +67,9 @@ export const ProvideAppContext = ({
     INITIAL_DATA.isAuthorized
   );
   const [eligibleError, setEligibleError] = useState<boolean>(true);
+  const [nicId, setNicId] = useState<string>("");
+  const [voterInformation, setVoterInformation] =
+    useState<TPostVoterInformationResponse | null>(null);
 
   //   get user eligibility api call
   const getUserEligibility = useCallback(
@@ -87,6 +94,7 @@ export const ProvideAppContext = ({
             message.error("ඔබ ඡන්දය දීමට සුදුසුකම් නොලබයි!");
         } else {
           setEligible(data);
+
           setEligibleError(false);
         }
         setIsLoading(false);
@@ -99,6 +107,8 @@ export const ProvideAppContext = ({
         if (language === "si")
           message.error("සුදුසුකම් විස්තර ලබා ගැනීමට නොහැකි විය!");
       }
+
+      router.push("/pages/select");
     },
     []
   );
@@ -151,11 +161,39 @@ export const ProvideAppContext = ({
     }
   }, []);
 
+  // post request to get uesr information
+  const postVoterInformation = useCallback(
+    async (nic: string): Promise<void> => {
+      setIsLoading(true);
+      try {
+        const { data } = await votesSVC().postVoterInformation({ nic_id: nic });
+        setVoterInformation(data);
+        console.log(data);
+        setIsLoading(false);
+      } catch (error) {
+        setIsLoading(false);
+        if (language === "en") message.error("Couldn't get user information!");
+        if (language === "ta") message.error("பயனர் தகவலைப் பெற முடியவில்லை!");
+        if (language === "si")
+          message.error("පරිශීලක තොරතුරු ලබා ගැනීමට නොහැකි විය!");
+      }
+    },
+    []
+  );
+
   //  API triggers for fingerpri
   useEffect(() => {
     setIsLoading(true);
     if (nic) {
       getUserEligibility(nic);
+    }
+
+    if (nicId) {
+      postVoterInformation(nic);
+    } else {
+      if (language === "en") message.error("Your NIC number is not detected.");
+      if (language === "ta") message.error("உங்கள் NIC எண் கண்டறியப்படவில்லை.");
+      if (language === "si") message.error("ඔබගේ ජාතික හැඳුනුම්පත් අංකය අනාවරණය කර නොමැත.");
     }
 
     if (nic && !eligibleError) {
@@ -172,7 +210,7 @@ export const ProvideAppContext = ({
       getAuthorized();
     }
     setIsLoading(false);
-  }, [eligibleError, getAuthorized, getUserEligibility, nic]);
+  }, [eligibleError, getAuthorized, getUserEligibility, nicId, nic]);
 
   useEffect(() => {
     setIsLoading(true);
@@ -192,11 +230,14 @@ export const ProvideAppContext = ({
       eligible,
       nic,
       party,
+      voterInformation,
       setParty,
       setNic,
       setVotes,
       setEligible,
       setSelectedParty,
+      setNicId,
+      setVoterInformation,
     }),
     [
       selectedParty,
@@ -206,11 +247,14 @@ export const ProvideAppContext = ({
       votes,
       nic,
       party,
+      voterInformation,
       setNic,
       setParty,
       setVotes,
       setEligible,
       setSelectedParty,
+      setNicId,
+      setVoterInformation,
     ]
   );
   return <appContext.Provider value={ctx}>{children}</appContext.Provider>;

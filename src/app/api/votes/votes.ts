@@ -5,6 +5,8 @@ import {
     TGetAuthorizeResponse,
     TGetEligibilityRequest,
     TGetEligibilityResponse,
+    TPostVoterInformationRequest,
+    TPostVoterInformationResponse,
     TPostVotesRequest,
     TPostVotesResponse,
     TVotesSVCEndpoints,
@@ -23,10 +25,13 @@ const Votes = (api: AxiosInstance): TVotesSVCEndpoints => {
 
     const getAuthorize = () => api.get<TGetAuthorizeResponse>(`${BASE_URL}/fingerprint/scan`);
 
+    const postVoterInformation = (payload: TPostVoterInformationRequest) => api.post<TPostVoterInformationResponse>(`${BASE_URL}/voters/details`, payload);
+
     return {
         getEligibility,
         postVotes,
         getAuthorize,
+        postVoterInformation,
     };
 };
 

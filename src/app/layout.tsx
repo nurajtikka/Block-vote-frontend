@@ -163,9 +163,8 @@ export default function RootLayout({
             </Header> */}
               <Content
                 style={{
-                  margin: "24px 16px",
-                  minHeight: 280,
-                  background: "#f7f7fa",
+                  minHeight: '100vh',
+                  background: "#ffffff",
                 }}
               >
                 {children}
