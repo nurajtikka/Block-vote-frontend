@@ -169,7 +169,7 @@ const SelectParty = () => {
                 </Form.Item>
               </Col>
             </Row>
-            <Typography.Title level={3} style={{ textAlign: "left", textDecoration: "underline" }}>Case your vote</Typography.Title>
+            <Typography.Title level={3} style={{ textAlign: "left", textDecoration: "underline" }}>Cast your vote</Typography.Title>
             <Row gutter={16}>
               <Col span={12}>
                 <Form.Item
