@@ -4,6 +4,10 @@ import Axios, { AxiosInstance } from 'axios';
 import votes from './votes/votes';
 import { TVotesSVCEndpoints } from './votes/votes.types';
 
+//  API base URL - Change this correctly
+// const BASE_URL = 'http://192.168.8.187:3001/_svc/block-vote/api/v1';
+export const BASE_URL = 'http://localhost:3001/_svc/block-vote/api/v1';
+
 //  API instance
 let api: AxiosInstance = Axios.create({
     baseURL: 'uninitialized!',
