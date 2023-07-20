@@ -250,7 +250,7 @@ export const ProvideAppContext = ({
           "අවසර දීමට සහ ඉදිරියට යාමට ඔබගේ ඇඟිලි සලකුණ පරිලෝකනය කරන්න."
         );
       getAuthorized();
-      // postVoterInformation(nic);
+      postVoterInformation(nic);
     }
     setIsLoading(false);
   }, [eligibleError, getAuthorized, getUserEligibility, nicId, nic]);
