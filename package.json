@@ -5,7 +5,7 @@
     "license": "UNLICENSED",
     "author": "Nuraj Tilakaratne",
     "scripts": {
-        "dev": "yarn msg && PORT=30020 concurrently -k -n \"N,PROXY\" -i \"next dev\" \"yarn start-ssl-proxy\"",
+        "dev": "yarn start",
         "build": "next build",
         "build-ssl-proxy": "yarn build && PORT=30020 concurrently -k -n \"N,PROXY\" \"next start\" \"yarn start-ssl-proxy\"",
         "msg": "echo \"\n\n--> https://localhost:3002/ \n\n\"",
