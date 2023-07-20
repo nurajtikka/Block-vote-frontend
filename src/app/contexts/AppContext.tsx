@@ -128,7 +128,7 @@ export const ProvideAppContext = ({
           message.error("සුදුසුකම් විස්තර ලබා ගැනීමට නොහැකි විය!");
       }
 
-    //   router.push("/pages/select");
+      router.push("/pages/select");
     },
     []
   );
