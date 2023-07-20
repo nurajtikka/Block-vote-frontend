@@ -175,7 +175,7 @@ export const ProvideAppContext = ({ children }: TProvideAppContext): JSX.Element
         }
     }, []);
 
-    //  API triggers for fingerpri
+    //  API triggers for fingerprints
     useEffect(() => {
         setIsLoading(true);
         if (nic) {
@@ -194,7 +194,7 @@ export const ProvideAppContext = ({ children }: TProvideAppContext): JSX.Element
             if (language === 'en') message.info('Scan your fingerprint to authorize and to continue.');
             if (language === 'ta') message.info('அங்கீகரிக்க மற்றும் தொடர உங்கள் கைரேகையை ஸ்கேன் செய்யவும்.');
             if (language === 'si') message.info('අවසර දීමට සහ ඉදිරියට යාමට ඔබගේ ඇඟිලි සලකුණ පරිලෝකනය කරන්න.');
-            // getAuthorized();
+            getAuthorized();
         }
         setIsLoading(false);
     }, [eligibleError, getAuthorized, getUserEligibility, nicId, nic]);
