@@ -127,8 +127,6 @@ export const ProvideAppContext = ({
         if (language === "si")
           message.error("සුදුසුකම් විස්තර ලබා ගැනීමට නොහැකි විය!");
       }
-
-      router.push("/pages/select");
     },
     []
   );
@@ -165,6 +163,7 @@ export const ProvideAppContext = ({
         const { data } = await votesSVC().postVoterInformation({ nic_id: nic });
         setVoterInformation(data);
         // console.log(data);
+        router.push("/pages/select");
         setIsLoading(false);
       } catch (error) {
         setIsLoading(false);
