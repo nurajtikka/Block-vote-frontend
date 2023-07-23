@@ -253,7 +253,7 @@ export const ProvideAppContext = ({
       postVoterInformation(nic);
     }
     setIsLoading(false);
-  }, [eligibleError, getAuthorized, getUserEligibility, nicId, nic]);
+  }, [eligibleError, getAuthorized, getUserEligibility, nic]);
 
   useEffect(() => {
     setIsLoading(true);
