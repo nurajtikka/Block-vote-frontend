@@ -114,8 +114,8 @@ export const ProvideAppContext = ({
             message.error("ඔබ ඡන්දය දීමට සුදුසුකම් නොලබයි!");
         } else {
           setEligible(data);
-          postVoterInformation(nic);
           setEligibleError(false);
+          postVoterInformation(nic);
         }
         setIsLoading(false);
       } catch (error) {
